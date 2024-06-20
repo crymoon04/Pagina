@@ -8,8 +8,8 @@ CREATE TABLE estudiantes (
     telefono VARCHAR(10) NOT NULL,
     semestre ENUM('1', '2', '3', '4', '5', '6', '7', '8', '9', '10') NOT NULL,
     carrera VARCHAR(3) NOT NULL,
-    genero_tutor VARCHAR(1) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
     fecha_registro TIMESTAMP
 );
 
@@ -38,3 +38,14 @@ CREATE TABLE estudianteTutor (
 
 INSERT INTO administradores (id, email, password_hash, created_at)
 VALUES (1, 'admin@ipn.mx', '$2y$10$iDARE96VriTRjI6fgTEtju.uYU66/NVbmx.1YloNbOU1FVvLm1JUe', '2024-05-29 18:31:17');
+
+INSERT INTO tutores (nombre, apellido_paterno, apellido_materno, genero)
+VALUES
+    ('Juan', 'Pérez', 'López', 'H'),
+    ('María', 'Gómez', 'García', 'M'),
+    ('Carlos', 'Martínez', 'Hernández', 'H'),
+    ('Ana', 'Rodríguez', 'Sánchez', 'M'),
+    ('Luis', 'López', 'González', 'H'),
+    ('Laura', 'García', 'Ramírez', 'M'),
+    ('Pedro', 'Hernández', 'Flores', 'H'),
+    ('Sofía', 'Sánchez', 'Torres', 'M');

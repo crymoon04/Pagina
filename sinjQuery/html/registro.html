@@ -36,7 +36,7 @@
             <br>
             <div class="form-group">
                 <label for="boleta">No. de Boleta:</label>
-                <input type="text" class="form-control" id="boleta" name="boleta" maxlength="10" required>
+                <input type="number" class="form-control" id="boleta" name="boleta" maxlength="10" required>
             </div>
             <br>
             <div class="form-group">
@@ -60,27 +60,27 @@
 
             <label for="semestre">No de Semestre</label><br>
             <select id="semestre" name="semestre">
-                <option value="Primero">Primero</option>
-                <option value="Segundo">Segundo</option>
-                <option value="Tercero">Tercero</option>
-                <option value="Cuarto">Cuarto</option>
-                <option value="Quinto">Quinto</option>
-                <option value="Sexto">Sexto</option>
-                <option value="Septimo">Séptimo</option>
-                <option value="Octavo">Octavo</option>
-                <option value="Noveno">Noveno</option>
-                <option value="Decimo">Décimo</option>
+                <option value="1">Primero</option>
+                <option value="2">Segundo</option>
+                <option value="3">Tercero</option>
+                <option value="4">Cuarto</option>
+                <option value="5">Quinto</option>
+                <option value="6">Sexto</option>
+                <option value="7">Séptimo</option>
+                <option value="8">Octavo</option>
+                <option value="9">Noveno</option>
+                <option value="10">Décimo</option>
             </select><br><br>
 
             <div class="form-group">
                 <label for="carrera">Carrera que estás cursando</label>
-                <input type="text" class="form-control" id="carrera" name="carrera" maxlength="100" required>
+                <input type="text" class="form-control" id="carrera" name="carrera" maxlength="3" required>
             </div>
 
             <label for="tutor">Prefieres que tu tutor sea ¿Hombre o Mujer?</label><br>
             <select id="tutor" name="tutor">
-                <option value="Hombre">Hombre</option>
-                <option value="Mujer">Mujer</option>
+                <option value="H">Hombre</option>
+                <option value="M" selected>Mujer</option>
             </select><br>
 
             <br>
@@ -89,12 +89,6 @@
             <div class="form-group">
                 <label for="correo">Correo Institucional</label>
                 <input type="email" class="form-control" id="correo" name="correo" required>
-            </div>
-            <br>
-            <br>
-            <div class="form-group">
-                <label for="contrasena">Contraseña:</label>
-                <input type="password" class="form-control" id="contrasena" name="contrasena" required>
             </div>
             <br>
             <br>
@@ -135,9 +129,8 @@
                 const am = document.getElementById('AM').value;
                 const tel = document.getElementById('tel').value;
                 const correo = document.getElementById('correo').value;
-                const contrasena = document.getElementById('contrasena').value;
 
-                if (!boleta || !nombre || !ap || !am || !tel || !correo || !contrasena) {
+                if (!boleta || !nombre || !ap || !am || !tel || !correo) {
                     const errorElement = document.getElementById('errorMessage');
                     errorElement.textContent = 'Por favor, completa todos los campos del formulario.';
                     errorElement.style.display = 'block';
