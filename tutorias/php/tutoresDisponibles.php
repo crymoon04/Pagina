@@ -1,44 +1,47 @@
 <?php
-echo("0");
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "escom_registro_tutorias";
-echo("a");
-$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Conexión a la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Error de conexión: " . $conn->connect_error);
 }
-echo("b");
-$genero = $_POST['genero'];
-echo("c");
 
+// Obtener el género del formulario (¡sanitizar en una aplicación real!)
+$genero = $_POST['genero'];
+
+// Consulta SQL preparada y segura
 $sql = "SELECT t.id, t.nombre, t.apellido_paterno, t.apellido_materno
         FROM tutores t
-        LEFT JOIN estudianteTutor et ON t.id = et.id_tutor
-        WHERE t.genero = '$genero'
+        INNER JOIN estudianteTutor et ON t.id = et.id_tutor
+        WHERE t.genero = ?
         GROUP BY t.id
         HAVING COUNT(et.id_estudiante) <= 15";
-echo("d");
 
-$result = $conn->query($sql);
-echo("e");
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $genero);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$tutores = array();
-echo("f");
-
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $tutores[] = $row; 
-    }
+// Manejo de errores de la consulta
+if (!$result) {
+    die("Error en la consulta: " . $conn->error);
 }
-echo("g");
 
+// Construir el arreglo de tutores
+$tutores = array();
+while ($row = $result->fetch_assoc()) {
+    $tutores[] = $row;
+}
 
+// Enviar respuesta JSON
 header('Content-Type: application/json');
 echo json_encode($tutores);
-echo("f");
 
+// Cerrar recursos
+$stmt->close();
 $conn->close();
 ?>
