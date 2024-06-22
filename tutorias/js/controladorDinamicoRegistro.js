@@ -6,6 +6,7 @@ $(document).ready(function() {
 
   $selectGenero.change(function() {
       const generoSeleccionado = $(this).val();
+      alert("Género seleccionado en JS: " + generoSeleccionado); // Depuración: Mostrar el género seleccionado
 
       $selectTutor.empty(); // Limpiar opciones previas
 
@@ -15,25 +16,22 @@ $(document).ready(function() {
           data: { genero: generoSeleccionado },
           dataType: 'json', // Indicar que esperamos JSON
           success: function(data) {
-              if (data.length > 0) { // Verificar si hay datos
+              alert("Respuesta del servidor: " + JSON.stringify(data)); // Depuración: Mostrar la respuesta JSON completa
+              if (data.length > 0) {
                   $selectTutor.prop("disabled", false); 
 
                   data.forEach(tutor => {
                       $selectTutor.append(`<option value="${tutor.id}">${tutor.nombre} ${tutor.apellido_paterno} ${tutor.apellido_materno}</option>`);
                   });
               } else {
-                  $selectTutor.append('<option value="">No se encontraron tutores.</option>'); // Mensaje si no hay datos
+                  $selectTutor.append('<option value="">No se encontraron tutores.</option>');
               }
           },
           error: function(jqXHR, textStatus, errorThrown) {
               let errorMessage = "Error al cargar los tutores.";
-              if (jqXHR.status === 404) {
-                  errorMessage = "Archivo PHP no encontrado.";
-              } else if (jqXHR.status === 500) {
-                  errorMessage = "Error interno del servidor.";
-              }
-              alert(errorMessage); // Mensaje de error más específico
-              console.error(errorThrown); // Registrar el error en la consola
+              // ... (manejo de errores más específico como en el ejemplo anterior)
+              alert(errorMessage);
+              console.error(errorThrown); 
           }
       });
   });

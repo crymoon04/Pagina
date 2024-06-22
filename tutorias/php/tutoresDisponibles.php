@@ -12,6 +12,7 @@ if ($conn->connect_error) {
 
 // Obtener el género del formulario (¡sanitizar en una aplicación real!)
 $genero = $_POST['genero'];
+echo "Género recibido en PHP: " . $genero; // Depuración: Mostrar el género recibido
 
 // Consulta SQL preparada y segura
 $sql = "SELECT t.id, t.nombre, t.apellido_paterno, t.apellido_materno
@@ -36,6 +37,8 @@ $tutores = array();
 while ($row = $result->fetch_assoc()) {
     $tutores[] = $row;
 }
+
+echo "Número de tutores encontrados: " . count($tutores); // Depuración: Mostrar cuántos tutores se encontraron
 
 // Enviar respuesta JSON
 header('Content-Type: application/json');
