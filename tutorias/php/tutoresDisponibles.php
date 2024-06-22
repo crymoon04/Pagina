@@ -22,12 +22,8 @@ if ($conn->connect_error) {
 $genero = $_POST['genero'];
 
 // Consulta SQL preparada y segura
-$sql = "SELECT t.id, t.nombre, t.apellido_paterno, t.apellido_materno
-        FROM tutores t
-        INNER JOIN estudianteTutor et ON t.id = et.id_tutor
-        WHERE t.genero = M
-        GROUP BY t.id
-        HAVING COUNT(et.id_estudiante) <= 15";
+$sql = "SELECT * FROM tutores 
+	WHERE genero = 'M';";
 
 $stmt = $conn->prepare($sql);
 //$stmt->bind_param("s", $genero);
