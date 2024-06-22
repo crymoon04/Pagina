@@ -6,7 +6,6 @@ $(document).ready(function() {
 
   $selectGenero.change(function() {
       const generoSeleccionado = $(this).val();
-      alert("Género seleccionado en JS: " + generoSeleccionado);
 
       $selectTutor.empty();
 
@@ -16,7 +15,6 @@ $(document).ready(function() {
           data: { genero: generoSeleccionado },
           dataType: 'json',
           success: function(data) {
-              alert("Respuesta del servidor: " + JSON.stringify(data));
               if (data.length > 0) {
                   $selectTutor.prop("disabled", false);
 
@@ -66,7 +64,6 @@ $(document).ready(function() {
                   method: 'POST',
                   data: formData,
                   success: function(response) {
-                      alert(response); // Mostrar mensaje de éxito
                       newWindow.close();
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
