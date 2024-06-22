@@ -1,4 +1,8 @@
 <?php
+header('Content-Type: application/json');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -9,6 +13,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     $error = array("error" => "Error de conexión: " . $conn->connect_error);
+    header('Content-Type: application/json');
     echo json_encode($error);
     exit; // Detener la ejecución si hay un error de conexión
 }
@@ -32,6 +37,7 @@ $result = $stmt->get_result();
 // Manejo de errores de la consulta
 if (!$result) {
     $error = array("error" => "Error en la consulta: " . $conn->error);
+    header('Content-Type: application/json');
     echo json_encode($error);
     exit; // Detener la ejecución si hay un error en la consulta
 }
@@ -43,7 +49,6 @@ while ($row = $result->fetch_assoc()) {
 }
 
 // Enviar respuesta JSON (sin mensajes de depuración)
-header('Content-Type: application/json');
 echo json_encode($tutores);
 
 // Cerrar recursos
