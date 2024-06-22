@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "escom_registro_tutorias";
+$dbname = "tutorias";
 
 // Conexión a la base de datos
 $conn = new mysqli($servername, $username, $password, $dbname);
