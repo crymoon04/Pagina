@@ -1,5 +1,17 @@
 USE tutorias;
 
+CREATE TABLE tipoTutoria (
+    id_tipo_tutoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+
+INSERT INTO tipoTutoria (nombre) VALUES
+    ('Individual'),
+    ('Grupal'),
+    ('Recuperación Académica'),
+    ('Regularización'),
+    ('Entre Pares');
+
 CREATE TABLE estudiantes (
     boleta INT PRIMARY KEY NOT NULL UNIQUE,
     nombre VARCHAR(50) NOT NULL,
@@ -10,6 +22,8 @@ CREATE TABLE estudiantes (
     carrera VARCHAR(3) NOT NULL,
     correo VARCHAR(100) NOT NULL UNIQUE,
     contrasena VARCHAR(255) NOT NULL,
+    id_tipo_tutoria INT,
+    FOREIGN KEY (id_tipo_tutoria) REFERENCES tipoTutoria(id_tipo_tutoria),
     fecha_registro TIMESTAMP
 );
 
