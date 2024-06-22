@@ -63,6 +63,7 @@ $(document).ready(function() {
                 data: formData,
                 success: function(response) {
                     $("#confirmationModal").hide();
+                    alert(response);
                     // Handle successful registration (e.g., show a success message)
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
