@@ -5,27 +5,40 @@ $(document).ready(function() {
   $selectTutor.prop("disabled", true);
 
   $selectGenero.change(function() {
-    const generoSeleccionado = $(this).val();
+      const generoSeleccionado = $(this).val();
 
-    $selectTutor.empty();
+      $selectTutor.empty(); // Limpiar opciones previas
 
-    $.ajax({
-      url: 'php/tutoresDisponibles.php',
-      method: 'POST',
-      data: { genero: generoSeleccionado },
-      success: function(data) {
-        $selectTutor.prop("disabled", false);
+      $.ajax({
+          url: 'php/tutoresDisponibles.php',
+          method: 'POST',
+          data: { genero: generoSeleccionado },
+          dataType: 'json', // Indicar que esperamos JSON
+          success: function(data) {
+              if (data.length > 0) { // Verificar si hay datos
+                  $selectTutor.prop("disabled", false); 
 
-        data.forEach(tutor => {
-          $selectTutor.append(`<option value="${tutor.id}">${tutor.nombre} ${tutor.apellido_paterno} ${tutor.apellido_materno}</option>`);
-        });
-      },
-      error: function() {
-        alert("Error al cargar los tutores.");
-      }
-    });
+                  data.forEach(tutor => {
+                      $selectTutor.append(`<option value="${tutor.id}">${tutor.nombre} ${tutor.apellido_paterno} ${tutor.apellido_materno}</option>`);
+                  });
+              } else {
+                  $selectTutor.append('<option value="">No se encontraron tutores.</option>'); // Mensaje si no hay datos
+              }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              let errorMessage = "Error al cargar los tutores.";
+              if (jqXHR.status === 404) {
+                  errorMessage = "Archivo PHP no encontrado.";
+              } else if (jqXHR.status === 500) {
+                  errorMessage = "Error interno del servidor.";
+              }
+              alert(errorMessage); // Mensaje de error más específico
+              console.error(errorThrown); // Registrar el error en la consola
+          }
+      });
   });
 });
+
 
 
 $(document).ready(function() {
