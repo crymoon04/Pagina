@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  $("#confirmationModal").hide();
   const $selectTutor = $("#tutor");
   const $selectGenero = $("#genero_tutor");
 
@@ -52,6 +53,7 @@ $(document).ready(function() {
             $table.append(`<tr><td>${key}:</td><td>${value}</td></tr>`);
         });
 
+        $("#registroForm").hide();
         $("#confirmationModal").show();
 
         $("#btnConfirmar").click(function() {
@@ -71,10 +73,12 @@ $(document).ready(function() {
 
         $("#btnModificar").click(function() {
             $("#confirmationModal").hide();
+            $("#registroForm").show();
         });
 
         $(".close-button").click(function() {
             $("#confirmationModal").hide();
+            $("#registroForm").show();
         });
     });
 });
