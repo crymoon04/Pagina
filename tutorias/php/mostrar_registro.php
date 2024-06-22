@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "escom_registro_tutorias";
+$dbname = "tutorias";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -33,7 +33,7 @@ if ($result = $conn->query($sql)) {
         $telefono = $row['telefono'];
         $semestre = $row['semestre'];
         $carrera = $row['carrera'];
-        $genero_tutor = $row['genero_tutor']; // Agregar el punto y coma aquí
+        $genero_tutor = $row['genero_tutor']; 
         $correo = $row['correo'];
     } else {
         echo "No se encontró ningún registro.";

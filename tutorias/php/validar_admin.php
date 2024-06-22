@@ -5,7 +5,7 @@ session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "escom_registro_tutorias";
+$dbname = "tutorias";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
