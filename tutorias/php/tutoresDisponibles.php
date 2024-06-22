@@ -19,19 +19,16 @@ if ($conn->connect_error) {
 }
 
 // Obtener el género del formulario (¡sanitizar en una aplicación real!)
-$genero = $_POST['genero'];
-
-// Consulta SQL preparada y segura
 $sql = "SELECT t.*
 FROM tutores t
-WHERE t.genero = 'H'
+WHERE t.genero = ?
   AND t.id NOT IN (SELECT id_tutor FROM estudiantetutor)
 
 UNION 
 
 SELECT t.*
 FROM tutores t
-WHERE t.genero = 'H'
+WHERE t.genero = ?
   AND t.id IN (
     SELECT te.id_tutor
     FROM estudiantetutor te
@@ -39,9 +36,19 @@ WHERE t.genero = 'H'
     HAVING COUNT(te.id_estudiante) < 15
   )";
 
+// Preparar la consulta
 $stmt = $conn->prepare($sql);
-//$stmt->bind_param("s", $genero);
-$stmt->execute();
+
+// Verificar si la preparación fue exitosa
+if (!$stmt) {
+    $error = array("error" => "Error en la preparación de la consulta: " . $conn->error);
+    header('Content-Type: application/json');
+    echo json_encode($error);
+    exit;
+}
+
+// Enlazar el parámetro (repetido dos veces debido a la UNION)
+$stmt->bind_param("ss", $genero, $genero);
 $result = $stmt->get_result();
 
 // Manejo de errores de la consulta
