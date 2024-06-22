@@ -22,8 +22,22 @@ if ($conn->connect_error) {
 $genero = $_POST['genero'];
 
 // Consulta SQL preparada y segura
-$sql = "SELECT * FROM tutores 
-	WHERE genero = 'M';";
+$sql = "SELECT t.*
+FROM tutores t
+WHERE t.genero = 'H'
+  AND t.id NOT IN (SELECT id_tutor FROM estudiantetutor)
+
+UNION 
+
+SELECT t.*
+FROM tutores t
+WHERE t.genero = 'H'
+  AND t.id IN (
+    SELECT te.id_tutor
+    FROM estudiantetutor te
+    GROUP BY te.id_tutor
+    HAVING COUNT(te.id_estudiante) < 15
+  )";
 
 $stmt = $conn->prepare($sql);
 //$stmt->bind_param("s", $genero);
