@@ -65,16 +65,19 @@ $stmt = $conn->prepare("INSERT INTO estudiantes (boleta, nombre, apellido_patern
 $stmt->bind_param("issssisssi", $boleta, $nombre, $apellidoPaterno, $apellidoMaterno, $telefono, $semestre, $carrera, $correo, $contrasena, $idTipoTutoria);
 
 if ($stmt->execute()) {
-    $idEstudiante = $stmt->insert_id;
+    // Verifica si se ha insertado correctamente
+    if ($stmt->affected_rows > 0) {
+        // Consulta SQL para insertar datos en la tabla estudianteTutor
+        $stmt = $conn->prepare("INSERT INTO estudianteTutor (id_estudiante, id_tutor) VALUES (?, ?)");
+        $stmt->bind_param("ii", $boleta, $idTutor);
 
-    // Consulta SQL para insertar datos en la tabla estudianteTutor
-    $stmt = $conn->prepare("INSERT INTO estudianteTutor (id_estudiante, id_tutor) VALUES (?, ?)");
-    $stmt->bind_param("ii", $idEstudiante, $idTutor);
-
-    if ($stmt->execute()) {
-        echo "Registro exitoso. ¡Bienvenido!";
+        if ($stmt->execute()) {
+            echo "Registro exitoso. ¡Bienvenido!";
+        } else {
+            echo "Error al asignar el tutor: " . $stmt->error;
+        }
     } else {
-        echo "Error al asignar el tutor: " . $stmt->error;
+        echo "Error al registrar estudiante: " . $stmt->error;
     }
 } else {
     echo "Error al registrar: " . $stmt->error;
