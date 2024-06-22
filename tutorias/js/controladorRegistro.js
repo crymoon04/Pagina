@@ -39,43 +39,42 @@ $(document).ready(function() {
   });
 
 
-  // Manejo del evento submit del formulario
-  $("#registroForm").submit(function(event) {
-      event.preventDefault(); // Evitar envío normal
+    $("#registroForm").submit(function(event) {
+        event.preventDefault();
+        const formData = {};
+        $(this).serializeArray().forEach(field => {
+            formData[field.name] = field.value;
+        });
 
-      const formData = {};
-      $(this).serializeArray().forEach(field => {
-          formData[field.name] = field.value;
-      });
+        // Create the table within the modal
+        const $table = $("<table>").appendTo("#modalTable");
+        $.each(formData, function(key, value) {
+            $table.append(`<tr><td>${key}:</td><td>${value}</td></tr>`);
+        });
 
-      const $table = $("<table>");
-      $.each(formData, function(key, value) {
-          $table.append(`<tr><td>${key}:</td><td>${value}</td></tr>`);
-      });
+        $("#confirmationModal").show();
 
-      const newWindow = window.open("mostrarRegistro.html", "_blank");
+        $("#btnConfirmar").click(function() {
+            $.ajax({
+                url: 'php/registro.php', // Replace with your actual PHP endpoint
+                method: 'POST',
+                data: formData,
+                success: function(response) {
+                    $("#confirmationModal").hide();
+                    // Handle successful registration (e.g., show a success message)
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Error al procesar el registro: " + errorThrown); 
+                }
+            });
+        });
 
-      $(newWindow).on("load", function() {
-          $(this.document).find("#contenido").html($table);
+        $("#btnModificar").click(function() {
+            $("#confirmationModal").hide();
+        });
 
-          $(this.document).find("#btnConfirmar").click(function() {
-              $.ajax({
-                  url: 'php/registro.php',
-                  method: 'POST',
-                  data: formData,
-                  success: function(response) {
-                      newWindow.close();
-                  },
-                  error: function(jqXHR, textStatus, errorThrown) {
-                      alert("Error al procesar el registro: " + errorThrown); // Mostrar mensaje de error más específico
-                  }
-              });
-          });
-
-          $(this.document).find("#btnModificar").click(function() {
-              const formUrl = "registro.html?" + $.param(formData);
-              newWindow.location.href = formUrl;
-          });
-      });
-  });
+        $(".close-button").click(function() {
+            $("#confirmationModal").hide();
+        });
+    });
 });
