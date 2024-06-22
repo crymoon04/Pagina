@@ -6,13 +6,15 @@ $dbname = "escom_registro_tutorias";
 
 // Conexión a la base de datos
 $conn = new mysqli($servername, $username, $password, $dbname);
+
 if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+    $error = array("error" => "Error de conexión: " . $conn->connect_error);
+    echo json_encode($error);
+    exit; // Detener la ejecución si hay un error de conexión
 }
 
 // Obtener el género del formulario (¡sanitizar en una aplicación real!)
 $genero = $_POST['genero'];
-echo "Género recibido en PHP: " . $genero; // Depuración: Mostrar el género recibido
 
 // Consulta SQL preparada y segura
 $sql = "SELECT t.id, t.nombre, t.apellido_paterno, t.apellido_materno
@@ -29,7 +31,9 @@ $result = $stmt->get_result();
 
 // Manejo de errores de la consulta
 if (!$result) {
-    die("Error en la consulta: " . $conn->error);
+    $error = array("error" => "Error en la consulta: " . $conn->error);
+    echo json_encode($error);
+    exit; // Detener la ejecución si hay un error en la consulta
 }
 
 // Construir el arreglo de tutores
@@ -38,9 +42,7 @@ while ($row = $result->fetch_assoc()) {
     $tutores[] = $row;
 }
 
-echo "Número de tutores encontrados: " . count($tutores); // Depuración: Mostrar cuántos tutores se encontraron
-
-// Enviar respuesta JSON
+// Enviar respuesta JSON (sin mensajes de depuración)
 header('Content-Type: application/json');
 echo json_encode($tutores);
 
