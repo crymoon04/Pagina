@@ -1,4 +1,4 @@
-USE escom_registro_tutorias;
+USE tutorias;
 
 CREATE TABLE estudiantes (
     boleta INT PRIMARY KEY NOT NULL UNIQUE,
