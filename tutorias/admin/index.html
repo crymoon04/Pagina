@@ -16,7 +16,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
     <script src="../js/jquery.js"></script>
-    <script src="../js/controladorDinamicoAdmin.js"></script>
+    <script src="js/controladorDinamicoAdmin.js"></script>
 
 </head>
 
@@ -32,9 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                     <li class="nav-item"><a class="nav-link" href="../index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#Registro">Registro</a></li>
                     <li class="nav-item"><a class="nav-link" href="#Administrador">Administrador</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#PDF">Recuperar PDF</a></li>
                 </ul>
             </div>
         </div>
@@ -50,16 +48,74 @@
     <!-- Group of Buttons -->
     <div class="container mt-4">
         <div class="btn-group" role="group" aria-label="Opciones de usuario">
-            <button type="button" class="btn btn-primary" id="alumnos">Alumnos</button>
-            <button type="button" class="btn btn-primary" id="tutores">Tutores</button>
-            <button type="button" class="btn btn-primary" id="administradores">Administradores</button>
+            <button type="button" class="btn btn-danger btn-sm" id="cerrar_sesion">Cerrar sesion</button>
         </div>
     </div>
 
     
-    <!-- Content Section -->
-    <div id="contenido">
-    </div>
+    <section class="page-section" id="alumnos">
+        <div class="container">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <h2 class="section-heading text-uppercase">Alumnos</h2>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <button class="btn btn-success">Crear Nuevo</button>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar">
+                        <button class="btn btn-outline-secondary" type="button">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Boleta</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido Paterno</th>
+                                    <th>Apellido Materno</th>
+                                    <th>Teléfono</th>
+                                    <th>Semestre</th>
+                                    <th>Carrera</th>
+                                    <th>Tutor</th>
+                                    <th>Correo</th>
+                                    <th>Fecha de Registro</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>202100001</td>
+                                    <td>Juan</td>
+                                    <td>Pérez</td>
+                                    <td>Gómez</td>
+                                    <td>555-123-4567</td>
+                                    <td>5</td>
+                                    <td>Ingeniería en Sistemas Computacionales</td>
+                                    <td>Dr. Martínez</td>
+                                    <td>juan.perez@example.com</td>
+                                    <td>2023-01-15</td>
+                                    <td>
+                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <a id="modificar" class="dropdown-item">Modificar</a>
+                                            <a id="eliminar" class="dropdown-item">Eliminar</a>
+                                          </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <!-- Footer-->
