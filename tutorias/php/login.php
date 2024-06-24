@@ -14,12 +14,12 @@ if ($conn->connect_error) {
 }
 
 // Verificar si los datos del formulario están configurados
-if (isset($_POST['adminUsuario']) && isset($_POST['adminContrasena'])) {
-    $adminUsuario = $_POST['adminUsuario'];
-    $adminContrasena = $_POST['adminContrasena'];
+if (isset($_POST['correo']) && isset($_POST['correo'])) {
+    $adminUsuario = $_POST['correo'];
+    $adminContrasena = $_POST['contrasena'];
 
     // Preparar y ejecutar la consulta
-    $stmt = $conn->prepare('SELECT id, password_hash FROM administradores WHERE username = ?');
+    $stmt = $conn->prepare('SELECT id, password_hash FROM administradores WHERE email = ?');
     if ($stmt) {
         $stmt->bind_param('s', $adminUsuario);
         $stmt->execute();
